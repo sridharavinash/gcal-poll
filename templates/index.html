@@ -1,10 +1,11 @@
 <!doctype html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bigfishtv-turret/4.0.0/turret.min.css" crossorigin="anonymous">
+
 <title>Galli CC poll</title>
+<h1 class="display-title"> Upcoming games </h1>
 {% if not events %}
-  <h2>No upcoming events found </h2>
+  <h1>No upcoming events found </h1>
 {% endif %}
-<ul>
 {% for event in events %}
-  <li>{{ event['summary'] }} </li>
+  <h1>{{ event['summary'] }} </h1>
 {% endfor %}
-</ul>
