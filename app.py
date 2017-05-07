@@ -47,7 +47,9 @@ def index():
     # service account email and relative location of your key file.
     key_file_location = 'client_secret.json'
 
-    #write out the json string to file
+    # Write out the json string to file
+    # since we're hosting it on heroku we need a way
+    # to pass the client secrets to the service creation.
     client_json = open(key_file_location, 'w')
     client_json.write(GCLIENT_DATA)
     client_json.write("\n")
@@ -71,4 +73,4 @@ def index():
     return render_template("index.html", events=events)
 
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True)    
+    app.run(debug=True, use_reloader=True)
