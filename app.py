@@ -11,12 +11,20 @@ from oauth2client import file
 from oauth2client import tools
 
 import datetime
+import dateutil.parser
 import os
 
 app = Flask(__name__)
 
 CALENDAR_ID = os.environ.get('CALENDAR_ID')
 GCLIENT_DATA = os.environ.get('GCLIENT_DATA')
+
+
+class gevent:
+    def __init__(self, event):
+        self.desc = event['summary']
+        self.start = dateutil.parser.parse(event['start']['dateTime'])
+        self.date = self.start.strftime("%B %d, %A %H:%M%p")
 
 def get_service(api_name, api_version, scope, key_file_location):
   """Get a service that communicates to a Google API.
@@ -68,9 +76,11 @@ def index():
         orderBy='startTime').execute()
 
     events = eventsResult.get('items', [])
+    gevents=[]
+    for event in events:
+        gevents.append(gevent(event))
 
-
-    return render_template("index.html", events=events)
+    return render_template("index.html", events=gevents)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

@@ -1,3 +1,5 @@
 Flask==0.12.1
 google-api-python-client==1.6.2
 gunicorn
+psycopg2
+python-dateutil
