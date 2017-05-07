@@ -1,0 +1,10 @@
+<!doctype html>
+<title>Galli CC poll</title>
+{% if not events %}
+  <h2>No upcoming events found </h2>
+{% endif %}
+<ul>
+{% for event in events %}
+  <li>{{ event['summary'] }} </li>
+{% endfor %}
+</ul>
