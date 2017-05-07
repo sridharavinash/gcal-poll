@@ -1,5 +1,5 @@
 # gallicc
 
-Simple polling app for team.
+Simple polling app.
 Syncs with gcal.
 Hosted on Heroku.
