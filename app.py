@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request, jsonify
 import argparse
+import itertools
 
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
@@ -33,6 +34,7 @@ class gevent:
         self.name = event['summary']
         self.start = dateutil.parser.parse(event['start']['dateTime'])
         self.date = self.start.strftime("%B %d, %A %H:%M%p")
+        self.players = []
 
 def get_service(api_name, api_version, scope, key_file_location):
   """Get a service that communicates to a Google API.
@@ -87,8 +89,15 @@ def index():
         db_event = models.Event(ge.name)
         db.session.merge(db_event)
         db.session.commit()
+        playing =  db.session.query(models.Player.name)\
+        .join(models.Event_Player, models.Player.id == models.Event_Player.player_id)\
+        .filter(models.Event_Player.event_name == ge.name, models.Event_Player.is_playing)
+
+        #flatten the list of tuple names
+        ge.players = list(itertools.chain(*playing.all()))
         gevents.append(ge)
     players = models.Player.query.all()
+
     return render_template("index.html", events=gevents,players=players)
 
 @app.route('/_update_poll', methods=['POST'])

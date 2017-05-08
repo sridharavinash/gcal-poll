@@ -18,7 +18,7 @@
   </p>
   {% for player in players %}
     <label class="control switch">
-      <input type="checkbox" name="checkbox_{{player.id}}_{{event.name}}">
+      <input type="checkbox" name="checkbox_{{player.id}}_{{event.name}}" {{ 'checked' if player.name in event.players else ''}}>
       <span class="control-indicator"></span>
       <span class="control-label">{{player.name}}</span>
       </label>
