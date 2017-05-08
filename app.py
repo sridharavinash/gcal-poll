@@ -34,7 +34,6 @@ def get_service(api_name, api_version, scope, key_file_location):
     api_version: The api version to connect to.
     scope: A list auth scopes to authorize for the application.
     key_file_location: The path to a valid service account p12 key file.
-    service_account_email: The service account email address.
 
   Returns:
     A service that is connected to the specified API.
@@ -51,8 +50,6 @@ def get_service(api_name, api_version, scope, key_file_location):
 def index():
     scope = ['https://www.googleapis.com/auth/calendar.readonly','https://www.googleapis.com/auth/calendar']
 
-    # Use the developer console and replace the values with your
-    # service account email and relative location of your key file.
     key_file_location = 'client_secret.json'
 
     # Write out the json string to file
