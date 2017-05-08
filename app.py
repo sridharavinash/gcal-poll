@@ -79,7 +79,7 @@ def index():
     eventsResult = service.events().list(
         calendarId=CALENDAR_ID,
         timeMin=now,
-        maxResults=2,
+        maxResults=1,
         singleEvents=True,
         orderBy='startTime').execute()
 
