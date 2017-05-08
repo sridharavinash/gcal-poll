@@ -35,6 +35,7 @@ class gevent:
         self.start = dateutil.parser.parse(event['start']['dateTime'])
         self.date = self.start.strftime("%B %d, %A %H:%M%p")
         self.players = []
+        self.count = 0
 
 def get_service(api_name, api_version, scope, key_file_location):
   """Get a service that communicates to a Google API.
@@ -95,6 +96,7 @@ def index():
 
         #flatten the list of tuple names
         ge.players = list(itertools.chain(*playing.all()))
+        ge.count = len(ge.players)
         gevents.append(ge)
     players = models.Player.query.all()
 
