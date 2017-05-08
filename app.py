@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+from flask import request, jsonify
 import argparse
 
 from apiclient.discovery import build
@@ -89,6 +90,20 @@ def index():
         gevents.append(ge)
     players = models.Player.query.all()
     return render_template("index.html", events=gevents,players=players)
+
+@app.route('/_update_poll', methods=['POST'])
+def update_poll():
+    new_ep = models.Event_Player(request.form['player_id'], request.form['event_name'], True)
+    ep = models.Event_Player.query.filter_by(player_id = new_ep.player_id, event_name = new_ep.event_name).first()
+    if ep:
+        new_ep.is_playing = not ep.is_playing
+        db.session.merge(new_ep)
+        db.session.commit()
+        return jsonify({'msg': 'updated'})
+
+    db.session.add(new_ep)
+    db.session.commit()
+    return jsonify({'msg':'added'})
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

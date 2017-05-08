@@ -10,9 +10,6 @@ class Player(db.Model):
         self.id = id
         self.name = name
 
-    def __repr__(self):
-        return self.name
-
 class Event(db.Model):
     __tablename__ = 'event'
 

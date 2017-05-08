@@ -1,5 +1,7 @@
 <!doctype html>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bigfishtv-turret/4.0.0/turret.min.css" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 
 <title>Galli CC poll</title>
 
@@ -16,9 +18,9 @@
   </p>
   {% for player in players %}
     <label class="control switch">
-      <input type="checkbox" name="checkbox_{{player}}_{{event.name}}">
+      <input type="checkbox" name="checkbox_{{player.id}}_{{event.name}}">
       <span class="control-indicator"></span>
-      <span class="control-label">{{player}}</span>
+      <span class="control-label">{{player.name}}</span>
       </label>
     {% endfor %}
   {% endfor %}
