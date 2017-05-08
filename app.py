@@ -87,8 +87,8 @@ def index():
         db.session.merge(db_event)
         db.session.commit()
         gevents.append(ge)
-
-    return render_template("index.html", events=gevents)
+    players = models.Player.query.all()
+    return render_template("index.html", events=gevents,players=players)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
