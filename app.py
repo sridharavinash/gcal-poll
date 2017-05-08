@@ -13,16 +13,23 @@ from oauth2client import tools
 import datetime
 import dateutil.parser
 import os
+from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
 
 CALENDAR_ID = os.environ.get('CALENDAR_ID')
 GCLIENT_DATA = os.environ.get('GCLIENT_DATA')
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
+app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+db = SQLAlchemy(app)
+
+import models
 
 class gevent:
     def __init__(self, event):
-        self.desc = event['summary']
+        self.name = event['summary']
         self.start = dateutil.parser.parse(event['start']['dateTime'])
         self.date = self.start.strftime("%B %d, %A %H:%M%p")
 
@@ -75,7 +82,11 @@ def index():
     events = eventsResult.get('items', [])
     gevents=[]
     for event in events:
-        gevents.append(gevent(event))
+        ge = gevent(event)
+        db_event = models.Event(ge.name)
+        db.session.merge(db_event)
+        db.session.commit()
+        gevents.append(ge)
 
     return render_template("index.html", events=gevents)
 
