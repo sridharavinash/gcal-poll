@@ -29,10 +29,8 @@ In a terminal run
 
 ## Init db
 
-Init scripts to setup migrations
+Setup db schema
 ```
-> python manage_db.py db init
-> python manage_db.py db migrate
 > python manage_db.py db upgrade
 ```
 
