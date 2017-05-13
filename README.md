@@ -45,6 +45,7 @@ Set the content of the downloaded credentials as an ENV var for testing.
 
 ```
 > export GCLIENT_DATA=`cat client_secret.json`
+> export CALENDAR_ID=<your_calendar_address>
 ```
 
 ## Run the app
