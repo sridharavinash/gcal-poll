@@ -23,7 +23,7 @@ In a terminal run
 
 > virtualenv venv
 > . venv/bin/activate
-> pip install requirements.txt
+> pip install -r requirements.txt
 > export DATABASE_URL="postrgres:\\localhost\mylocaldb"
 ```
 
