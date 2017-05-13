@@ -55,4 +55,4 @@ Set the content of the downloaded credentials as an ENV var for testing.
 > python app.py
 ```
 
-The local server should be available at http://localhost:3000
+The local server should be available at http://localhost:5000
