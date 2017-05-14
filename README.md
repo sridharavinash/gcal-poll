@@ -9,13 +9,31 @@
 ## setting up local postgres db
 
 Make sure you have postgresql installed for your environment.
+See Ubuntu instructions [here](https://help.ubuntu.com/community/PostgreSQL)
+```
+$ sudo apt-get install postgresql postgresql-contrib
+```
+
+Optionally install a handy GUI:
+```
+$ sudo apt-get install pgadmin3
+```
 
 Create a local database named `mylocaldb`
+```
+$ sudo -u postgres psql postgres
+postgres=# \password postgres
+Ctrl+D
+$ sudo -u postgres createdb mylocaldb
+```
 
 ## Setup app
 
 Setup `virtualenv`. If it's not installed on your system follow instructions
 from [here](http://flask.pocoo.org/docs/0.12/installation/)
+```
+$ sudo apt-get install python-virtualenv
+```
 
 In a terminal run
 ```
@@ -24,7 +42,7 @@ In a terminal run
 > virtualenv venv
 > . venv/bin/activate
 > pip install -r requirements.txt
-> export DATABASE_URL="postrgres:\\localhost\mylocaldb"
+> export DATABASE_URL='postgres://postgres:<password>@localhost/mylocaldb'
 ```
 
 ## Init db
