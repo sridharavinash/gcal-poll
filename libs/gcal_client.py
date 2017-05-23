@@ -10,6 +10,7 @@ import datetime
 
 CALENDAR_ID = os.environ.get('CALENDAR_ID')
 GCLIENT_DATA = os.environ.get('GCLIENT_DATA')
+NUM_OF_EVENTS = 3
 
 def get_service(api_name, api_version, scope, key_file_location):
   """Get a service that communicates to a Google API.
@@ -52,7 +53,7 @@ def get_cal_details():
     eventsResult = service.events().list(
         calendarId=CALENDAR_ID,
         timeMin=now,
-        maxResults=1,
+        maxResults=3,
         singleEvents=True,
         orderBy='startTime').execute()
 
