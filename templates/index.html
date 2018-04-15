@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bigfishtv-turret/4.0.0/turret.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='gallicc.css') }}"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 
@@ -13,26 +14,27 @@
 <body>
   <div class="container">
     <h1 class="display-title"> Upcoming games </h1>
-    <hr/>
+    
     {% if not events %}
       <h1>No upcoming events found </h1>
     {% endif %}
     {% for event in events %}
-    <p>
+    
       <h4>{{ event.name }}</h4>
       {{event.date}}
-      <p>
         <em><strong>{{event.count}}</strong> voted yes</em>
-      </p>
-    </p>
+    
+    <div class="team">        
     {% for player in players %}
-      <label class="control switch">
-        <input type="checkbox" name="checkbox_{{player.id}}_{{event.name}}" {{ 'checked' if player.name in event.players else ''}}>
-        <span class="control-indicator"></span>
-        <span class="control-label">{{player.name}}</span>
-        </label>
+        <div class="player">
+          <label class="control switch">
+            <input type="checkbox" name="checkbox_{{player.id}}_{{event.name}}" {{ 'checked' if player.name in event.players else ''}}>
+            <span class="control-indicator"></span>
+            <span class="control-label">{{player.name}}</span>
+            </label>
+        </div>
       {% endfor %}
-      <hr/>
+    </div>
     {% endfor %}
   </div>
 </body>
