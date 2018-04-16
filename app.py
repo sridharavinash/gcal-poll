@@ -3,9 +3,6 @@ from flask import render_template
 from flask import request, jsonify
 import argparse
 import itertools
-
-
-import dateutil.parser
 import os
 from flask_sqlalchemy import SQLAlchemy
 from libs import gcal_client
@@ -20,21 +17,13 @@ db = SQLAlchemy(app)
 
 import models
 
-class gevent:
-    def __init__(self, event):
-        self.name = event['summary']
-        self.start = dateutil.parser.parse(event['start']['dateTime'])
-        self.date = self.start.strftime("%B %d, %A %H:%M%p")
-        self.players = []
-        self.count = 0
-
 
 @app.route('/')
 def index():
     events = gcal_client.get_cal_details()
     gevents=[]
     for event in events:
-        ge = gevent(event)
+        ge = gcal_client.gevent(event)
         db_event = models.Event(ge.name)
         db.session.merge(db_event)
         db.session.commit()
