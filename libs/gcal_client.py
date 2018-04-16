@@ -7,10 +7,20 @@ from oauth2client import file
 from oauth2client import tools
 import os
 import datetime
+import dateutil.parser
 
 CALENDAR_ID = os.environ.get('CALENDAR_ID')
 GCLIENT_DATA = os.environ.get('GCLIENT_DATA')
 NUM_OF_EVENTS = 3
+
+class gevent:
+    def __init__(self, event):
+        self.name = event['summary']
+        self.start = dateutil.parser.parse(event['start']['dateTime'])
+        self.date = self.start.strftime("%B %d, %A %H:%M%p")
+        self.players = []
+        self.count = 0
+
 
 def get_service(api_name, api_version, scope, key_file_location):
   """Get a service that communicates to a Google API.
@@ -53,7 +63,7 @@ def get_cal_details():
     eventsResult = service.events().list(
         calendarId=CALENDAR_ID,
         timeMin=now,
-        maxResults=3,
+        maxResults=NUM_OF_EVENTS,
         singleEvents=True,
         orderBy='startTime').execute()
 
