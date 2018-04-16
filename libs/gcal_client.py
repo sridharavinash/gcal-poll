@@ -53,7 +53,7 @@ def get_cal_details():
     eventsResult = service.events().list(
         calendarId=CALENDAR_ID,
         timeMin=now,
-        maxResults=3,
+        maxResults=NUM_OF_EVENTS,
         singleEvents=True,
         orderBy='startTime').execute()
 
