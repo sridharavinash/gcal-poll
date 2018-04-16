@@ -35,7 +35,7 @@ def index():
         ge.players = list(itertools.chain(*playing.all()))
         ge.count = len(ge.players)
         gevents.append(ge)
-    players = sort(models.Player.query.all())
+    players = sorted(models.Player.query.all())
 
     return render_template("index.html", events=gevents,players=players)
 
