@@ -10,5 +10,10 @@
     flex-basis: 35%;
     padding: 0;
     margin: 5px 40px 5px 0;
-    /* border: 1px #000000 solid; */
+}
+.votecount {
+    flex-direction: row;
+    flex-basis: 35%;
+    padding:10px 0px 10px 0px;
+    margin: 5px 40px 5px 0;
 }
