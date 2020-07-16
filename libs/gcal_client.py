@@ -17,9 +17,9 @@ NUM_OF_EVENTS = 3
 class gevent:
     def __init__(self, event):
         self.name = event['summary']
-        self.recurringId = event['recurringEventId']
         self.start = dateutil.parser.parse(event['start']['dateTime'])
         self.date = self.start.strftime("%B %d, %A %H:%M%p")
+        self.dateTitle = self.start.strftime("%m/%d")
         self.players = []
         self.count = 0
 

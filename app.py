@@ -23,11 +23,8 @@ def index():
     gevents = []
     for event in events:
         ge = gcal_client.gevent(event)
-        print(event)
-        if ge.recurringId != "":
-            db_event = models.Event("{}-({})".format(ge.name, ge.recurringId))
-        else:
-            db_event = models.Event(ge.name)
+        db_event = models.Event("{}-({})".format(ge.name, ge.dateTitle))
+        print(db_event)
         db.session.merge(db_event)
         db.session.commit()
         playing = db.session.query(models.Player.name)\
