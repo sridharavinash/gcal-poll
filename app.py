@@ -1,4 +1,3 @@
-import models
 from flask import Flask
 from flask import render_template
 from flask import request, jsonify
@@ -16,6 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
 
+import models
 
 @app.route('/')
 def index():
