@@ -23,7 +23,7 @@ def index():
     gevents = []
     for event in events:
         ge = gcal_client.gevent(event)
-        db_event = ge.name
+        db_event = models.Event(ge.name)
         db.session.merge(db_event)
         db.session.commit()
         playing = db.session.query(models.Player.name)\
