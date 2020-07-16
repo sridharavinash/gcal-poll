@@ -23,7 +23,7 @@ def index():
     gevents = []
     for event in events:
         ge = gcal_client.gevent(event)
-        print(ge)
+        print(event)
         if ge.recurringId != "":
             db_event = models.Event("{}-({})".format(ge.name, ge.recurringId))
         else:
