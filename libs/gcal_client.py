@@ -19,7 +19,7 @@ class gevent:
         self.summary = event['summary']
         self.start = dateutil.parser.parse(event['start']['dateTime'])
         self.date = self.start.strftime("%B %d, %A %H:%M%p")
-        self.name = "{}-({})".format(self.summary, self.date.strftime("%m/%d"))
+        self.name = "{}-({})".format(self.summary, self.start.strftime("%m/%d"))
         self.players = []
         self.count = 0
 
