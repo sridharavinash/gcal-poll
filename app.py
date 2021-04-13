@@ -9,6 +9,7 @@ from libs import gcal_client
 from operator import itemgetter, attrgetter
 
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres:","postgresql:")
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
