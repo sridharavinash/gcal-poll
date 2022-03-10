@@ -1,6 +1,8 @@
+from email import header
 from flask import Flask
 from flask import render_template
 from flask import request, jsonify
+from flask_cors import CORS, cross_origin
 import argparse
 import itertools
 import os
@@ -12,6 +14,7 @@ SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres:","postgresql:")
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
@@ -39,6 +42,30 @@ def index():
 
     return render_template("index.html", events=gevents, players=players)
 
+@app.route('/api/turnout')
+@cross_origin()
+def turnout():
+    msg = {"msg": "success"}
+    events = gcal_client.get_cal_details()
+    gevents = []
+    for event in events:
+        ge = gcal_client.gevent(event)
+        db_event = models.Event(ge.name)
+        db.session.merge(db_event)
+        db.session.commit()
+        playing = db.session.query(models.Player.name)\
+            .join(models.Event_Player, models.Player.id == models.Event_Player.player_id)\
+            .filter(models.Event_Player.event_name == ge.name, models.Event_Player.is_playing)
+
+        # flatten the list of tuple names
+        ge.players = list(itertools.chain(*playing.all()))
+        ge.count = len(ge.players)
+        gevents.append(ge)
+    players = sorted(models.Player.query.all(), key=attrgetter('name'))
+    #geventsJson = []
+    #for event in gevents:
+    #    geventsJson.append(event.__dict__)
+    return jsonify(events=gevents[0].__dict__)
 
 @app.route('/_update_poll', methods=['POST'])
 def update_poll():
